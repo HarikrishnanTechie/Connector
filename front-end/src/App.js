@@ -22,7 +22,6 @@ const HttpRequestForm = () => {
   });
 
   const [data, setData] = useState(null);
-  const [folderID, setFolderID] = useState('');
   const [showResponse, setShowResponse] = useState(false);
   const [queryString, setQueryString] = useState('');
   const handleChange = (e) => {
@@ -45,38 +44,19 @@ const HttpRequestForm = () => {
     setValue(newValue);
   };
 
-  const handleFolderChange = (type) => {
-    if(type === 'folder'){
-      if(folderID){
-        setFormValues((prevValues) => ({
-          ...prevValues,
-          endpointUrl: `${formValues.endpointUrl}/folders/${folderID}`,
-        }));
-      }
-    } else {
-      if(folderID){
-        setFormValues((prevValues) => ({
-          ...prevValues,
-          endpointUrl: `${formValues.endpointUrl}/file/${folderID}`,
-        }));
-      }
-    }
-    setFolderID('');
-  };
-
   const handleFetchDetails = () => {
     setExpanded('');
     setShowResponse(true);
   }
 
-  useEffect(() => {
-    const { baseUrl, endpointUrl } = formValues;
-    if (baseUrl && endpointUrl) {
-      setData(mockJsonResponse); 
-    } else {
-      setData(null);
-    }
-  }, [formValues.baseUrl, formValues.endpointUrl, formValues]);
+  // useEffect(() => {
+  //   const { baseUrl, endpointUrl } = formValues;
+  //   if (baseUrl && endpointUrl) {
+  //     setData(mockJsonResponse); 
+  //   } else {
+  //     setData(null);
+  //   }
+  // }, [formValues.baseUrl, formValues.endpointUrl, formValues]);
 
   const [expanded, setExpanded] = React.useState('panel1');
 
@@ -97,7 +77,6 @@ const HttpRequestForm = () => {
     <>
     <Box
       component="form"
-      onSubmit={handleSubmit}
       sx={{
         display: "flex",
         flexDirection: "column",
@@ -134,9 +113,7 @@ const HttpRequestForm = () => {
         onChange={(e) => setPrimaryKey(e.target.value)}
         fullWidth
       />}
-      <AccordionUsage folderID={folderID} 
-        setFolderID ={setFolderID} 
-        handleFolderChange={handleFolderChange} 
+      <AccordionUsage
         formValues={formValues} 
         handleChange={handleChange} 
         handleTabsChange={handleTabsChange} 
