@@ -1,10 +1,20 @@
 import React, { useState } from "react";
+import {
+  TextField,
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
+  Button,
+  Box,
+  Tabs,
+  Tab,
+} from "@mui/material";
 
 const TextboxForm = () => {
   // Sample JSON data
   const jsonData = [
     { id: 1, label: "Token", placeholder: "Enter Token" },
-    // { id: 2, label: "Client Secret", placeholder: "Enter Client Secret" },
   ];
 
   // State to store form values
@@ -24,13 +34,12 @@ const TextboxForm = () => {
   };
 
   return (
-   <>
+   <Box>
       {jsonData.map(({ id, label, placeholder }) => (
-        <div key={id} style={{ marginBottom: "10px" }}>
-          <label htmlFor={`textbox-${id}`} style={{ display: "block" }}>
-            {label}
-          </label>
-          <input
+        <Box key={id} style={{ marginTop: "10px" }}>
+          
+          <TextField id={`textbox-${id}`} label={placeholder} variant="outlined" name="baseUrl" size="small" value={formData[id]} onChange={(e) => handleChange(id, e.target.value)} fullWidth/>
+          {/* <input
             id={`textbox-${id}`}
             type="text"
             placeholder={placeholder}
@@ -42,10 +51,10 @@ const TextboxForm = () => {
               borderRadius: "4px",
               border: "1px solid #ccc",
             }}
-          />
-        </div>
+          /> */}
+        </Box>
       ))}
-    </>
+    </Box>
   );
 };
 

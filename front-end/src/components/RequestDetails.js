@@ -14,29 +14,16 @@ import TextboxForm from "./AuthData";
 import AutoAddRowTable from "./AutoAddRowTable";
 import AdditionalDetails from "./AdditionalDetails";
 
-const RequestDetails = ({folderID, setFolderID, handleFolderChange, formValues, handleChange, handleTabsChange, value, expanded, setExpanded , handleAccordionChange, setQueryString}) => {
+const RequestDetails = ({formValues, handleChange, handleTabsChange, value, expanded, setExpanded , handleAccordionChange, setQueryString, setHeaders, disabled}) => {
   return (
-    <div> 
-        {/* {formValues.endpointUrl && <><p>Folder/File Details</p>
-        <TextField
-        label="Folder/File"
-        variant="outlined"
-        name="folder/file"
-        value={folderID}
-        onChange={(e) => setFolderID(e.target.value)}
-        fullWidth
-      />
-      <div style={{display:'flex', flexDirection: 'row', justifyContent:'center'}}>
-      <Button onClick={() => handleFolderChange('folder')}>Add Folder</Button>
-      <Button onClick={() => handleFolderChange('file')}>Add File</Button>
-      </div></>} */}
-      
+    <div>       
       <FormControl fullWidth>
         <InputLabel>HTTP Method</InputLabel>
         <Select
           name="httpMethod"
           value={formValues.httpMethod}
           onChange={handleChange}
+          size="small"
           label="HTTP Method"
         >
           <MenuItem value="GET">GET</MenuItem>
@@ -46,20 +33,21 @@ const RequestDetails = ({folderID, setFolderID, handleFolderChange, formValues, 
         </Select>
       </FormControl>
 
-      <FormControl fullWidth style={{marginTop: '20px'}}>
+      <FormControl fullWidth style={{marginTop: '20px'}} disabled={disabled}>
         <InputLabel>Authentication Method</InputLabel>
         <Select
-          name="authMethod"
-          value={formValues.authMethod}
+          name="authentication"
+          value={formValues.authentication}
           onChange={handleChange}
           label="Authentication Method"
+          size="small"
         >
           <MenuItem value="None">No Auth</MenuItem>
           <MenuItem value="Bearer">Bearer</MenuItem>
         </Select>
-        {formValues.authMethod === "Bearer" && <TextboxForm />}
+        {formValues.authentication === "Bearer" && <TextboxForm />}
         <p>Additional Details</p>
-      <AdditionalDetails setQueryString={setQueryString}/>
+      <AdditionalDetails setQueryString={setQueryString} setHeaders={setHeaders}/>
       </FormControl></div>
   )
 }

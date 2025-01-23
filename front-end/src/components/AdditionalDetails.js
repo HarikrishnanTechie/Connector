@@ -1,8 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
+import { TextField, Tabs, Tab, Box } from '@mui/material';
 import AutoAddRowTable from './AutoAddRowTable';
 
 function CustomTabPanel(props) {
@@ -34,7 +32,7 @@ function a11yProps(index) {
   };
 }
 
-function AdditionalDetails({setQueryString}) {
+function AdditionalDetails({setQueryString, setHeaders}) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -51,13 +49,20 @@ function AdditionalDetails({setQueryString}) {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <AutoAddRowTable setQueryString={setQueryString}/>
+        <AutoAddRowTable type="Params" setHeadersOrParams={setQueryString}/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-      <AutoAddRowTable />
+      <AutoAddRowTable type="Headers" setHeadersOrParams={setHeaders}/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        Item Three
+      <TextField
+          id="outlined-multiline-static"
+          label="Body"
+          multiline
+          rows={4}
+          defaultValue=""
+          fullWidth
+        />
       </CustomTabPanel>
     </Box>
   );

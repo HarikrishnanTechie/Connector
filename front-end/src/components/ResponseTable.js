@@ -6,6 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { Tab } from '@mui/material';
 
 function createData(name, display_name, type, required, description) {
   return { name, display_name, type, required, description};
@@ -19,34 +20,47 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-function ResponseTable() {
+// {
+
+//   "id" : "123",
+//   name: "abc"
+//   },
+//   {
+  
+//   "id" : "456",
+//   name: "def"
+//   },
+//   {
+  
+//   "id" : "789",
+//   name: "xyz"
+//   }
+
+
+
+function ResponseTable({data}) {
+  const keys = data.length > 0 && Object.keys(...data);
+
+  console.log(keys);
+  const values = data.length > 0 && Object.values(...data);
+
+  console.log(values)
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+      <Table size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            <TableCell>Internal Name</TableCell>
-            <TableCell>Display Name</TableCell>
-            <TableCell >Type</TableCell>
-            <TableCell>ID</TableCell>
-            <TableCell>Description</TableCell>
+            {keys.length && keys?.map((key) => {
+              return <TableCell>{key}</TableCell>
+            })}
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell>{row.calories}</TableCell>
-              <TableCell>{row.fat}</TableCell>
-              <TableCell>{row.carbs}</TableCell>
-              <TableCell>{row.protein}</TableCell>
-            </TableRow>
-          ))}
+          <TableRow>
+            {values.length && values?.map((value, index) => {
+              return <TableCell>{value}</TableCell>
+            })}
+          </TableRow>
         </TableBody>
       </Table>
     </TableContainer>

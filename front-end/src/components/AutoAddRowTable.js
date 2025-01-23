@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { getQueryString } from "../utils";
 
-const AutoAddRowTable = ({setQueryString}) => {
+const AutoAddRowTable = ({type, setHeadersOrParams}) => {
   // Initial table data
   const [rows, setRows] = useState([{ key: "", value: "" }]);
 
@@ -10,14 +10,13 @@ const AutoAddRowTable = ({setQueryString}) => {
     const updatedRows = [...rows];
     updatedRows[index][field] = value;
     setRows(updatedRows);
-    setQueryString(getQueryString(updatedRows));
+    setHeadersOrParams(getQueryString(updatedRows, type))
+    
     // Check if the last row has data and add a new row
     if (index === rows.length - 1 && (updatedRows[index].key || updatedRows[index].value)) {
       addRow();
     }
   };
-
-  console.log(rows)
   // Add a new row
   const addRow = () => {
     setRows((prevRows) => [...prevRows, { key: "", value: "" }]);
@@ -25,8 +24,13 @@ const AutoAddRowTable = ({setQueryString}) => {
 
   // Remove a row
   const removeRow = (index) => {
+    if(index === 0) {
+      setRows([{ key: "", value: "" }]);
+      return;
+    }
     const updatedRows = rows.filter((_, i) => i !== index);
     setRows(updatedRows);
+    setHeadersOrParams(getQueryString(updatedRows, type))
   };
 
   // Handle form submission

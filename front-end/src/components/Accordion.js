@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import RequestDetails from './RequestDetails';
 
-export default function AccordionUsage({folderID, setFolderID, handleFolderChange, formValues, handleChange, handleTabsChange, value, expanded, setExpanded , handleAccordionChange, setQueryString}) {
+export default function AccordionUsage({formValues, handleChange, handleTabsChange, value, expanded, setExpanded , handleAccordionChange, setQueryString, setHeaders, disabled}) {
     
   return (
     <div>
@@ -19,10 +19,12 @@ export default function AccordionUsage({folderID, setFolderID, handleFolderChang
           <Typography component="span">Request Details</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <RequestDetails folderID={folderID} setFolderID={setFolderID} handleFolderChange={handleFolderChange} formValues={formValues} handleChange={handleChange} handleTabsChange={handleTabsChange} value={value} handleAccordionChange={handleAccordionChange}
+          <RequestDetails formValues={formValues} handleChange={handleChange} handleTabsChange={handleTabsChange} value={value} handleAccordionChange={handleAccordionChange}
         expanded={expanded}
         setExpanded={setExpanded}
-        setQueryString={setQueryString}/>
+        setQueryString={setQueryString}
+        setHeaders={setHeaders}
+        disabled={disabled}/>
         </AccordionDetails>
       </Accordion>
     </div>
