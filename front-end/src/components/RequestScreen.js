@@ -34,6 +34,7 @@ const RequestScreen = ({data, setData}) => {
     const handleFetchDetails = (e) => {
        e.preventDefault();
        let query = fields.map(field => `${field.value}`).join('/');
+       const temp = formValues.endpointUrl.split('{')[0]+'/'+query
 
        const fetchRequest = {
         "authentication" : formValues.authentication === "None" 
@@ -44,7 +45,7 @@ const RequestScreen = ({data, setData}) => {
         },
         "request" : {
             "method" : formValues.httpMethod,
-            "url" : formValues.baseUrl + formValues.endpointUrl,
+            "url" : formValues.baseUrl + `${fields.length > 0 ? temp : formValues.endpointUrl}`,
             "headers" : headers,
         },
         ...(formValues.httpMethod === "POST" || formValues.httpMethod === "PUT" 
