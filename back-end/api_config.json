@@ -1,0 +1,13 @@
+{ 
+  "authentication":
+  { 
+   "auth_type": "Bearer", 
+      "token":  "eyJhbGciOiJFUzM4NCIsImtpZCI6IjM3Y2QyMzc2LTE4NGYtNGEzZi1iM2VkLTI4ZDU0MDdjOTllMiIsInR5cCI6IkpXVCJ9.eyJzdWJUeXBlIjoidXNlciIsInRlbmFudElkIjoicUNjMi1zRXJLWDBpTlYwQUlrTUFhUUY0RTcwdVRmYnkiLCJqdGkiOiIzN2NkMjM3Ni0xODRmLTRhM2YtYjNlZC0yOGQ1NDA3Yzk5ZTIiLCJhdWQiOiJxbGlrLmFwaSIsImlzcyI6InFsaWsuYXBpL2FwaS1rZXlzIiwic3ViIjoiNjYyNzY1ODVlZWMyOTQ1OGZiZDRkZjM3In0.VCiEOT67krliI_smMAMtrNLempsVZT6FiZTgHIIJYxBu41k8y3gq14UZ2Pt4eiX0wjR8SXoLtEMBjOnoBcM2ZjlkTpoN9a8nGLGbbFNA3N5RFcPCFG0Ldx69rso6On60"
+  },
+  "request": 
+  {    
+    "httpMethod": "GET",  
+    "url": "https://k86r2hasnxwgm67.us.qlikcloud.com/api/v1/data-files"  
+  }
+
+}
