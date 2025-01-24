@@ -54,7 +54,7 @@ const RequestScreen = ({data, setData}) => {
             token: formValues.token 
         },
         "request" : {
-            "http_method" : formValues.httpMethod,
+            "httpMethod" : formValues.httpMethod,
             "url" : formValues.baseUrl + `${fields.length > 0 ? temp : formValues.endpointUrl}`,
             "headers" : headers,
         },
