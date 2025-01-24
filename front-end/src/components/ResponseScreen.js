@@ -1,7 +1,8 @@
-import React from 'react';
-import {Box, Tabs, Tab } from "@mui/material";
+import React, {useState} from 'react';
+import {Box, Tabs, Tab, Tooltip, IconButton } from "@mui/material";
 import PropTypes from 'prop-types';
 import ResponseTable from './ResponseTable';
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 
 function CustomTabPanel(props) {
@@ -15,7 +16,7 @@ function CustomTabPanel(props) {
         aria-labelledby={`simple-tab-${index}`}
         {...other}
       >
-        {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+        {value === index && <Box sx={{ p: 2 }}>{children}</Box>}
       </div>
     );
   }
@@ -34,14 +35,22 @@ function CustomTabPanel(props) {
   }
 
 const ResponseScreen = ({data}) => {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
+  const [copySchemaSuccess, setCopySchemaSuccess] = useState(false);
+  const [copyCodeSuccess, setCopyCodeSuccess] = useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  const handleCopy = (text, setMethod) => {
+    navigator.clipboard.writeText(text).then(() => {
+      setMethod(true)
+      setTimeout(() => setMethod(false), 2000); // Reset success message after 2 seconds
+    });
+  };
+
   const temp = data?.response?.data?.length > 0 ? data?.response?.data : data?.response;
-  console.log('Temp', data)
 
   return (
     <Box component="form" sx={{ display: "flex", flexDirection: "column", gap: 2, width: "50%", padding: 2, border: "1px solid #ccc", borderRadius: 2, backgroundColor:'white'}}>
@@ -53,16 +62,39 @@ const ResponseScreen = ({data}) => {
           <Tab label="Source Code" {...a11yProps(2)} />
         </Tabs>
       </Box>
-      <CustomTabPanel value={value} index={0}>
-       <ResponseTable data={temp}/>
+      <CustomTabPanel value={value} index={0} style={
+    data && data.response
+      ? { border: 'solid 0.5px #00000033', borderRadius: '4px' }
+      : undefined
+  }>
+       {data && data.response && <ResponseTable data={temp}/>}
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}> 
-          {data && data.response && <pre>{JSON.stringify(data?.schema, null, 2)}</pre>}
+      <CustomTabPanel value={value} index={1}  style={
+    data && data.response
+      ? { border: 'solid 0.5px #00000033', borderRadius: '4px' }
+      : undefined}>
+        {data && data.response && <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '4px' }}>
+        <Tooltip title={copySchemaSuccess ? "Copied!" : "Copy to clipboard"}>
+          <IconButton size='small' onClick={() => handleCopy(JSON.stringify(data?.schema), setCopySchemaSuccess)}>
+            <ContentCopyIcon fontSize="small"/>
+          </IconButton>
+        </Tooltip>
+        </div>}
+        {data && data.response && <pre style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>{JSON.stringify(data?.schema, null, 2)}</pre>}
       </CustomTabPanel>
+
       <CustomTabPanel value={value} index={2}>
-      {data && data.response && <pre style={{ backgroundColor: "#f4f4f4", padding: "10px", borderRadius: "5px" }}>
+      
+      {data && data.response && <pre style={{ backgroundColor: "#f4f4f4", padding: "10px", borderRadius: "5px", whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>
+      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '8px' }}>
+        <Tooltip title={copyCodeSuccess ? "Copied!" : "Copy to clipboard"}>
+          <IconButton size='small' onClick={() => handleCopy(data?.generated_code, setCopyCodeSuccess)}>
+            <ContentCopyIcon fontSize="small"/>
+          </IconButton>
+        </Tooltip>
+        </div>
       <code>{data?.generated_code}</code>
-</pre>}
+      </pre>}
       </CustomTabPanel>
     </Box>
   )

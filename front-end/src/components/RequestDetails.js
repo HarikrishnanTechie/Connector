@@ -1,17 +1,11 @@
 import React from "react";
 import {
-  TextField,
   MenuItem,
   Select,
   FormControl,
-  InputLabel,
-  Button,
-  Box,
-  Tabs,
-  Tab,
+  InputLabel
 } from "@mui/material";
 import TextboxForm from "./AuthData";
-import AutoAddRowTable from "./AutoAddRowTable";
 import AdditionalDetails from "./AdditionalDetails";
 
 const RequestDetails = ({formValues, handleChange, handleTabsChange, value, expanded, setExpanded , handleAccordionChange, setQueryString, setHeaders, disabled}) => {
@@ -45,7 +39,7 @@ const RequestDetails = ({formValues, handleChange, handleTabsChange, value, expa
           <MenuItem value="None">No Auth</MenuItem>
           <MenuItem value="Bearer">Bearer</MenuItem>
         </Select>
-        {formValues.authentication === "Bearer" && <TextboxForm handleChange={handleChange} formValues={formValues}/>}
+        {formValues.authentication === "Bearer" && <TextboxForm handleChange={handleChange} formValues={formValues} disabled={disabled}/>}
         <p>Additional Details</p>
       <AdditionalDetails setQueryString={setQueryString} setHeaders={setHeaders}/>
       </FormControl></div>
