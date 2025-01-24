@@ -55,10 +55,10 @@ const ResponseScreen = ({data}) => {
        
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-          {data?.response?.length > 0 && <pre>{data?.schema}</pre>}
+          {data?.response?.data?.length > 0 && <pre>{data?.schema}</pre>}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-      {data && data?.response?.length > 0 && <pre style={{ backgroundColor: "#f4f4f4", padding: "10px", borderRadius: "5px" }}>
+      {data && data?.response?.data.length > 0 && <pre style={{ backgroundColor: "#f4f4f4", padding: "10px", borderRadius: "5px" }}>
       <code>{data?.generated_code}</code>
 </pre>}
       </CustomTabPanel>
