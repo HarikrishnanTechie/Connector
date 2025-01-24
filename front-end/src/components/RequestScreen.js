@@ -47,16 +47,16 @@ const RequestScreen = ({data, setData}) => {
        const temp = formValues.endpointUrl.split('{')[0]+'/'+query
 
        const fetchRequest = {
-        "authentication" : formValues.authentication === "None" 
+        'authentication' : formValues.authentication === "None" 
         ? {} 
         : { 
             auth_type: formValues.authentication, 
             token: formValues.token 
         },
-        "request" : {
-            "httpMethod" : formValues.httpMethod,
-            "url" : formValues.baseUrl + `${fields.length > 0 ? temp : formValues.endpointUrl}`,
-            "headers" : headers,
+        'request' : {
+            'httpMethod' : formValues.httpMethod,
+            'url' : formValues.baseUrl + `${fields.length > 0 ? temp : formValues.endpointUrl}`,
+            'headers' : headers,
         },
         ...(formValues.httpMethod === "POST" || formValues.httpMethod === "PUT" 
             ? { data: formValues.data } 
