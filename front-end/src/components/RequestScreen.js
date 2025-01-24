@@ -35,16 +35,12 @@ const RequestScreen = ({data, setData}) => {
         setFormValues((prevValues) => ({ ...prevValues, [name]: value}));
     };
 
-    console.log(formValues)
-
     const handleTabsChange = (event, newValue) => {
         setValue(newValue);
     };
 
     const handleFetchDetails = async(e) => {
        e.preventDefault();
-       let query = fields.map(field => `${field.value}`).join('/');
-       const temp = formValues.endpointUrl.split('{')[0]+'/'+query
 
        const fetchRequest = {
         authentication : formValues.authentication === "None" 
@@ -55,12 +51,17 @@ const RequestScreen = ({data, setData}) => {
         },
         request : {
             httpMethod : formValues.httpMethod,
-            url : formValues.baseUrl + `${fields.length > 0 ? temp : formValues.endpointUrl}`,
+            url : formValues.baseUrl,
+            endpoint1Url: formValues.endpointUrl,
+            endpoint2Url: fields[0]?.additional,
+            additionalEndpointValue: fields[0]?.value,
         },
         ...(formValues.httpMethod === "POST" || formValues.httpMethod === "PUT" 
             ? { data: formValues.data } 
         : {})
        }
+
+      console.log('Fetch', fetchRequest)
 
       const response = await axios.post(`http://127.0.0.1:5001/make_request`, fetchRequest)
       setData(response.data)
@@ -80,6 +81,7 @@ const RequestScreen = ({data, setData}) => {
           field.id === fieldId ? { ...field, [fieldName]: newValue } : field
         ));
     };
+
     useEffect(() => {
         if(queryString){
         formValues.endpointUrl.split('?')
@@ -100,6 +102,7 @@ const RequestScreen = ({data, setData}) => {
         {fields.length > 0 && <p style={{margin: 0, padding: 0}}>Additional Endpoints</p>}
         {fields.map((field) => (
         <Box key={field.id} sx={{display: "flex", alignItems: "center", gap: 1, mb: 0,}}>
+          <TextField label="Endpoint" variant="outlined" value={field.additional} onChange={(e) => handleInputChange(field.id, "additional", e.target.value)} sx={{ flex: 1 }} size='small' />
           <TextField label="Value" variant="outlined" value={field.value} onChange={(e) => handleInputChange(field.id, "value", e.target.value)} sx={{ flex: 1 }} size='small' />
         </Box>
       ))}

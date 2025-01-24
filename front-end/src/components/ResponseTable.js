@@ -22,11 +22,8 @@ const rows = [
 
 function ResponseTable({data}) {
   const keys = data?.length > 0 && Object.keys(...data);
-
-  console.log('Table', data);
   const values = data?.length > 0 && Object.values(...data);
 
-  console.log('values', values)
   return (
     <TableContainer component={Paper}>
       <Table size="small" aria-label="a dense table">

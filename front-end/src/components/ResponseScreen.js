@@ -41,6 +41,7 @@ const ResponseScreen = ({data}) => {
   };
 
   const temp = data?.response?.data?.length > 0 ? data?.response?.data : data?.response;
+  console.log('Temp', data)
 
   return (
     <Box component="form" sx={{ display: "flex", flexDirection: "column", gap: 2, width: "50%", padding: 2, border: "1px solid #ccc", borderRadius: 2, backgroundColor:'white'}}>
