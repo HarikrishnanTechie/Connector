@@ -4,17 +4,38 @@ import AccordionUsage from "./Accordion";
 import axios from 'axios';
 
 const RequestScreen = ({data, setData}) => {
-    const [formValues, setFormValues] = useState({ baseUrl: "", endpointUrl: "", httpMethod: "GET", authentication: "None", data: {}});
+    const [formValues, setFormValues] = useState({ baseUrl: "", endpointUrl: "", httpMethod: "GET", authentication: "None", token: "", data: {}});
     const [expanded, setExpanded] = React.useState('panel1');
     const [value, setValue] = React.useState('one');
     const [queryString, setQueryString] = useState('');
     const [headers, setHeaders] = useState([{ key: "", value: "" }]);
     const [fields, setFields] = useState([]);
+    const [error, setError] = useState(false);
+    const [helperText, setHelperText] = useState("");
+
+    const baseUrlRegex = /^(https?:\/\/)([\w-]+\.)+[\w-]{2,}(\/)?$/;
 
     const handleChange = (e) => {
+
         const { name, value } = e.target;
+        // Validate the URL
+        if(name === 'baseUrl'){
+          if(formValues.baseUrl === ''){
+            setError(false);
+            setHelperText("");
+          }
+          if (!baseUrlRegex.test(formValues.baseUrl)) {
+            setError(true);
+            setHelperText("Please enter a valid base URL (e.g., https://example.com/)");
+          } else {
+          setError(false);
+          setHelperText(""); // Clear the error if valid
+          }
+        }
         setFormValues((prevValues) => ({ ...prevValues, [name]: value}));
     };
+
+    console.log(formValues)
 
     const handleTabsChange = (event, newValue) => {
         setValue(newValue);
@@ -43,7 +64,7 @@ const RequestScreen = ({data, setData}) => {
        }
 
 
-       const response = await axios.get(`${fetchRequest.request.url}`, fetchRequest)
+       const response = await axios.get(`http://127.0.0.1:5001/make_request`, fetchRequest)
        setData(response)
     }
     const handleAccordionChange = (panel) => (event, isExpanded) => {
@@ -73,7 +94,9 @@ const RequestScreen = ({data, setData}) => {
   return (
     <Box component="form" sx={{ display: "flex", flexDirection: "column", gap: 2, width: "50%", padding: 2, border: "1px solid #ccc", borderRadius: 2, backgroundColor:'white'}}>
         Request Screen
-        <TextField label="Base URL" variant="outlined" name="baseUrl" size="small" value={formValues.baseUrl} onChange={handleChange} fullWidth required/>
+        <TextField label="Base URL" variant="outlined" name="baseUrl" size="small" value={formValues.baseUrl} onChange={handleChange} fullWidth required 
+          error={error}
+          helperText={helperText}/>
         <TextField label="Endpoint URL" variant="outlined" name="endpointUrl" size="small" value={formValues.endpointUrl} onChange={handleChange} fullWidth />
         {fields.length > 0 && <p style={{margin: 0, padding: 0}}>Additional Endpoints</p>}
         {fields.map((field) => (

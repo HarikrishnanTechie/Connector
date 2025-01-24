@@ -45,7 +45,7 @@ const RequestDetails = ({formValues, handleChange, handleTabsChange, value, expa
           <MenuItem value="None">No Auth</MenuItem>
           <MenuItem value="Bearer">Bearer</MenuItem>
         </Select>
-        {formValues.authentication === "Bearer" && <TextboxForm />}
+        {formValues.authentication === "Bearer" && <TextboxForm handleChange={handleChange} formValues={formValues}/>}
         <p>Additional Details</p>
       <AdditionalDetails setQueryString={setQueryString} setHeaders={setHeaders}/>
       </FormControl></div>
