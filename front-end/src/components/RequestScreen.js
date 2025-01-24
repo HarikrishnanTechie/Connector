@@ -56,7 +56,6 @@ const RequestScreen = ({data, setData}) => {
         request : {
             httpMethod : formValues.httpMethod,
             url : formValues.baseUrl + `${fields.length > 0 ? temp : formValues.endpointUrl}`,
-            headers : headers,
         },
         ...(formValues.httpMethod === "POST" || formValues.httpMethod === "PUT" 
             ? { data: formValues.data } 
@@ -104,9 +103,9 @@ const RequestScreen = ({data, setData}) => {
         </Box>
       ))}
         <AccordionUsage formValues={formValues} handleChange={handleChange} handleTabsChange={handleTabsChange} value={value} handleAccordionChange={handleAccordionChange}
-        expanded={expanded} setExpanded={setExpanded} setQueryString={setQueryString} setHeaders={setHeaders} disabled={data?.response.length}/>
+        expanded={expanded} setExpanded={setExpanded} setQueryString={setQueryString} setHeaders={setHeaders} disabled={data?.response?.data.length}/>
         <Button type="submit" variant="contained" color="primary" size="small" onClick={handleFetchDetails}>Fetch Data</Button>
-        {data && data?.response?.length > 0 && <Button type="submit" variant="contained" color="primary" size="small" onClick={addTextFields}>Add New Endpoints</Button>}
+        {data && data?.response?.data?.length > 0 && <Button type="submit" variant="contained" color="primary" size="small" onClick={addTextFields}>Add New Endpoints</Button>}
         </Box>
   )
 }
