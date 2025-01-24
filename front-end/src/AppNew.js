@@ -6,7 +6,7 @@ import ResponseScreen from './components/ResponseScreen';
 import header from './assets/header.png';
 
 const AppNew = () => {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState();
   return (
     <>
     <img src={header} alt='header' style={{width:'100%', height: '200px'}}/>
