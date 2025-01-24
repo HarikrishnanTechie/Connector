@@ -62,9 +62,10 @@ const RequestScreen = ({data, setData}) => {
         : {})
        }
 
-       const response = await axios.post(`http://127.0.0.1:5001/make_request`, fetchRequest)
-       setData(response)
+      const response = await axios.post(`http://127.0.0.1:5001/make_request`, fetchRequest)
+      setData(response.data)
     }
+
     const handleAccordionChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
     };

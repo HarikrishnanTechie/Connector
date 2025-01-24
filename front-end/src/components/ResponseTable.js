@@ -20,47 +20,18 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-// {
-
-//   "id" : "123",
-//   name: "abc"
-//   },
-//   {
-  
-//   "id" : "456",
-//   name: "def"
-//   },
-//   {
-  
-//   "id" : "789",
-//   name: "xyz"
-//   }
-
-
-
 function ResponseTable({data}) {
   const keys = data?.length > 0 && Object.keys(...data);
 
-  console.log(keys);
+  console.log('Table', data);
   const values = data?.length > 0 && Object.values(...data);
 
-  console.log(values)
+  console.log('values', values)
   return (
     <TableContainer component={Paper}>
       <Table size="small" aria-label="a dense table">
-        <TableHead>
-          <TableRow>
-            {keys.length && keys?.map((key) => {
-              return <TableCell>{key}</TableCell>
-            })}
-          </TableRow>
-        </TableHead>
         <TableBody>
-          <TableRow>
-            {values.length && values?.map((value, index) => {
-              return <TableCell>{value}</TableCell>
-            })}
-          </TableRow>
+        <pre>{JSON.stringify(data, null, 2)}</pre>
         </TableBody>
       </Table>
     </TableContainer>

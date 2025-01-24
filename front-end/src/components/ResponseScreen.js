@@ -51,11 +51,11 @@ const ResponseScreen = ({data}) => {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-       <ResponseTable data={data?.response}/>
+       <ResponseTable data={data?.response?.data}/>
        
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-          {data?.response?.data?.length > 0 && <pre>{data?.schema}</pre>}
+      <CustomTabPanel value={value} index={1}> 
+          {data?.response?.data?.length > 0 && <pre>{JSON.stringify(data?.schema, null, 2)}</pre>}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
       {data && data?.response?.data.length > 0 && <pre style={{ backgroundColor: "#f4f4f4", padding: "10px", borderRadius: "5px" }}>
