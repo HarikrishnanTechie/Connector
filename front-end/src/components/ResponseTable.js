@@ -1,6 +1,7 @@
 import {React, useState} from 'react';
 import { Tooltip, IconButton } from '@mui/material';
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import JsonSyntaxHighlighter from './JsonSyntaxHighlighter';
 
 function ResponseTable({data}) {
   const [copySuccess, setCopySuccess] = useState(false);
@@ -22,7 +23,8 @@ function ResponseTable({data}) {
         </Tooltip>
         </div>
     
-        <pre style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>{JSON.stringify(data, null, 2)}</pre>
+        {/* <pre style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>{JSON.stringify(data, null, 2)}</pre> */}
+        <JsonSyntaxHighlighter data={data} />
     </>
   );
 }
