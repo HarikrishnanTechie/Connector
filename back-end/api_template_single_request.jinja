@@ -1,0 +1,24 @@
+# Generated Python code for API request
+import requests
+import json
+
+def api_request():
+    # Authentication setup
+    auth_type = "{{ authentication.auth_type }}"
+    token = "{{ authentication.token }}"
+    headers = {
+        "Authorization": f"{auth_type} {token}"
+    }
+
+    # Request details
+    url = "{{ request.url }}"
+    method = "{{ request.httpMethod }}"
+    
+    try:
+        # Making the request
+        response = requests.get(url, headers=headers)
+                   
+        return response.json()
+    
+    except requests.RequestException as e:
+            print(f"Error making GET request: {e}")

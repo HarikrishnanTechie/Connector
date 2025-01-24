@@ -1,0 +1,42 @@
+# Generated Python code for API request
+import requests
+import json
+
+# Define the base URL and endpoint URLs
+base_url = "{{ request.url }}"
+endpoint1Url = "{{ request.endpoint1Url }}"
+endpoint2Url = "{{ request.endpoint2Url }}"
+
+# Define the headers
+headers = {
+    'Authorization': '{{ authentication.auth_type }} {{ authentication.token }}'
+}
+
+try:
+    # Make the first GET request
+    response1 = requests.get(base_url + endpoint1Url, headers=headers)
+
+    if response1.status_code == 200:
+        response1_data = response1.json()
+        
+        # Extract the {{ request.additionalEndpointValue }} key from the JSON response
+        try:
+            additionalEndpointValue = response1_data['{{ request.additionalEndpointValue }}']
+            
+            # Construct the second API URL and make the second GET request
+            response2 = requests.get(base_url + endpoint2Url + additionalEndpointValue, headers=headers)
+            
+            if response2.status_code == 200:
+                # Print the JSON response from the second request
+                print(json.dumps(response2.json(), indent=4))
+            else:
+                print(f"Second request failed with status code: {response2.status_code}, details: {response2.text}")
+        except KeyError:
+            print(f"Key '{{ request.additionalEndpointValue }}' not found in the response of the first request")
+
+    else:
+        print(f"First request failed with status code: {response1.status_code}, details: {response1.text}")
+except requests.RequestException as e:
+    print(f"Error making GET request: {e}")
+
+
