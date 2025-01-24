@@ -3,17 +3,6 @@ import { TextField, Button, Box } from "@mui/material";
 import AccordionUsage from "./Accordion";
 import axios from 'axios';
 
-const mockJsonResponse = [
-    {"id" : "123", "name": "abc"},
-    {"id" : "456","name": "def"},
-    {"id" : "789","name": "xyz"}
-]
-
-const mockSchema = {
-    "id" : "ID",
-    "name": "NAME"
-}
-
 const RequestScreen = ({data, setData}) => {
     const [formValues, setFormValues] = useState({ baseUrl: "", endpointUrl: "", httpMethod: "GET", authentication: "None", data: {}});
     const [expanded, setExpanded] = React.useState('panel1');
@@ -31,7 +20,7 @@ const RequestScreen = ({data, setData}) => {
         setValue(newValue);
     };
 
-    const handleFetchDetails = (e) => {
+    const handleFetchDetails = async(e) => {
        e.preventDefault();
        let query = fields.map(field => `${field.value}`).join('/');
        const temp = formValues.endpointUrl.split('{')[0]+'/'+query
@@ -44,7 +33,7 @@ const RequestScreen = ({data, setData}) => {
             token: formValues.token 
         },
         "request" : {
-            "method" : formValues.httpMethod,
+            "http_method" : formValues.httpMethod,
             "url" : formValues.baseUrl + `${fields.length > 0 ? temp : formValues.endpointUrl}`,
             "headers" : headers,
         },
@@ -54,13 +43,8 @@ const RequestScreen = ({data, setData}) => {
        }
 
 
-       axios.get(`https://jsonplaceholder.typicode.com/users`)
-      .then(res => {
-        console.log(res)
-      })
-
-       console.log(fetchRequest)
-       setData(mockJsonResponse)
+       const response = await axios.get(`${fetchRequest.request.url}`, fetchRequest)
+       setData(response)
     }
     const handleAccordionChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
@@ -71,14 +55,11 @@ const RequestScreen = ({data, setData}) => {
         setFields([...fields, { id: Date.now(), key: "", value: "" }]);
     };
 
-    console.log(fields)
-
     const handleInputChange = (fieldId, fieldName, newValue) => {
         setFields(fields.map(field =>
           field.id === fieldId ? { ...field, [fieldName]: newValue } : field
         ));
     };
-
     useEffect(() => {
         if(queryString){
         formValues.endpointUrl.split('?')
@@ -101,9 +82,9 @@ const RequestScreen = ({data, setData}) => {
         </Box>
       ))}
         <AccordionUsage formValues={formValues} handleChange={handleChange} handleTabsChange={handleTabsChange} value={value} handleAccordionChange={handleAccordionChange}
-        expanded={expanded} setExpanded={setExpanded} setQueryString={setQueryString} setHeaders={setHeaders} disabled={data.length}/>
+        expanded={expanded} setExpanded={setExpanded} setQueryString={setQueryString} setHeaders={setHeaders} disabled={data?.response.length}/>
         <Button type="submit" variant="contained" color="primary" size="small" onClick={handleFetchDetails}>Fetch Data</Button>
-        {data.length > 0 && <Button type="submit" variant="contained" color="primary" size="small" onClick={addTextFields}>Add New Endpoints</Button>}
+        {data && data?.response?.length > 0 && <Button type="submit" variant="contained" color="primary" size="small" onClick={addTextFields}>Add New Endpoints</Button>}
         </Box>
   )
 }

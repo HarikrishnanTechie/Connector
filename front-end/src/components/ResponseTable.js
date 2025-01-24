@@ -39,10 +39,10 @@ const rows = [
 
 
 function ResponseTable({data}) {
-  const keys = data.length > 0 && Object.keys(...data);
+  const keys = data?.length > 0 && Object.keys(...data);
 
   console.log(keys);
-  const values = data.length > 0 && Object.values(...data);
+  const values = data?.length > 0 && Object.values(...data);
 
   console.log(values)
   return (

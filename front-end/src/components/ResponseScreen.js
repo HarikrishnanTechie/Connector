@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextField, Button, Box, Tabs, Tab } from "@mui/material";
+import {Box, Tabs, Tab } from "@mui/material";
 import PropTypes from 'prop-types';
 import ResponseTable from './ResponseTable';
 
@@ -40,36 +40,6 @@ const ResponseScreen = ({data}) => {
     setValue(newValue);
   };
 
-
-  const code = `
-  function greet(name) {
-    const message = \`Hello, \${name}!\`;
-    console.log(message);
-    return message;
-  }
-  
-  greet("World");
-  `;
-
-  const schema = `{
-  "baseUrl": "https://api.example.com/v1",
-  "request": {
-    "method": "GET",
-    "endpoint": "/resource",
-    "headers": {
-      "Authorization": "Bearer <token>",
-      "Content-Type": "application/json"
-    },
-    "queryParams": {
-      "key1": "value1",
-      "key2": "value2"
-    },
-    "body": {
-      "attribute1": "value1",
-      "attribute2": "value2"
-    }
-  }
-}`
   return (
     <Box component="form" sx={{ display: "flex", flexDirection: "column", gap: 2, width: "50%", padding: 2, border: "1px solid #ccc", borderRadius: 2, backgroundColor:'white'}}>
         Response Screen
@@ -81,15 +51,15 @@ const ResponseScreen = ({data}) => {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-       <ResponseTable data={data}/>
+       <ResponseTable data={data?.response}/>
        
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-          {data.length > 0 && <pre>{schema}</pre>}
+          {data?.response?.length > 0 && <pre>{data?.schema}</pre>}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-      {data.length > 0 && <pre style={{ backgroundColor: "#f4f4f4", padding: "10px", borderRadius: "5px" }}>
-      <code>{code}</code>
+      {data && data?.response?.length > 0 && <pre style={{ backgroundColor: "#f4f4f4", padding: "10px", borderRadius: "5px" }}>
+      <code>{data?.generated_code}</code>
 </pre>}
       </CustomTabPanel>
     </Box>
