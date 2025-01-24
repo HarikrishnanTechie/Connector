@@ -559,9 +559,9 @@ const RequestScreen = ({data, setData}) => {
 
       console.log('Fetch', fetchRequest)
 
-      // const response = await axios.post(`http://127.0.0.1:5001/make_request`, fetchRequest)
-      // setData(response.data)
-      setData(mockResponse)
+      const response = await axios.post(`http://127.0.0.1:5001/make_request`, fetchRequest)
+      setData(response.data)
+      // setData(mockResponse)
     }
 
     const handleAccordionChange = (panel) => (event, isExpanded) => {
