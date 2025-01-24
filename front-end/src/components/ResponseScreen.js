@@ -34,11 +34,13 @@ function CustomTabPanel(props) {
   }
 
 const ResponseScreen = ({data}) => {
-    const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const temp = data?.response?.data?.length > 0 ? data?.response?.data : data?.response;
 
   return (
     <Box component="form" sx={{ display: "flex", flexDirection: "column", gap: 2, width: "50%", padding: 2, border: "1px solid #ccc", borderRadius: 2, backgroundColor:'white'}}>
@@ -51,14 +53,13 @@ const ResponseScreen = ({data}) => {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-       <ResponseTable data={data?.response?.data}/>
-       
+       <ResponseTable data={temp}/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}> 
-          {data?.response?.data?.length > 0 && <pre>{JSON.stringify(data?.schema, null, 2)}</pre>}
+          {data && data.response && <pre>{JSON.stringify(data?.schema, null, 2)}</pre>}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-      {data && data?.response?.data.length > 0 && <pre style={{ backgroundColor: "#f4f4f4", padding: "10px", borderRadius: "5px" }}>
+      {data && data.response && <pre style={{ backgroundColor: "#f4f4f4", padding: "10px", borderRadius: "5px" }}>
       <code>{data?.generated_code}</code>
 </pre>}
       </CustomTabPanel>

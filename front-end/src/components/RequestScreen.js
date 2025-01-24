@@ -104,9 +104,9 @@ const RequestScreen = ({data, setData}) => {
         </Box>
       ))}
         <AccordionUsage formValues={formValues} handleChange={handleChange} handleTabsChange={handleTabsChange} value={value} handleAccordionChange={handleAccordionChange}
-        expanded={expanded} setExpanded={setExpanded} setQueryString={setQueryString} setHeaders={setHeaders} disabled={data?.response?.data.length}/>
+        expanded={expanded} setExpanded={setExpanded} setQueryString={setQueryString} setHeaders={setHeaders} disabled={data?.response}/>
         <Button type="submit" variant="contained" color="primary" size="small" onClick={handleFetchDetails}>Fetch Data</Button>
-        {data && data?.response?.data?.length > 0 && <Button type="submit" variant="contained" color="primary" size="small" onClick={addTextFields}>Add New Endpoints</Button>}
+        {data && data?.response && <Button type="submit" variant="contained" color="primary" size="small" onClick={addTextFields}>Add New Endpoints</Button>}
         </Box>
   )
 }
