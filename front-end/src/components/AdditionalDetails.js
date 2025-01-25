@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { TextField, Tabs, Tab, Box } from '@mui/material';
+import { TextField, Tabs, Tab, Box, Paper } from '@mui/material';
 import AutoAddRowTable from './AutoAddRowTable';
 
 function CustomTabPanel(props) {
@@ -14,7 +14,7 @@ function CustomTabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+      {value === index && <Box sx={{ p: 1 }}>{children}</Box>}
     </div>
   );
 }
