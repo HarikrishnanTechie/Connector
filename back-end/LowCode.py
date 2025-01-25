@@ -29,6 +29,7 @@ def extract_code_from_gpt_model(messages):
     """Extracts the generated Python code from the OpenAI response."""
     #messages = response.choices[0].message['content']
     code = messages.split("```")[1].strip()
+    code = code[code.find("import"):]
     return code
 
 
@@ -37,7 +38,7 @@ def extract_code_from_gpt_model(messages):
 def generate_python_code(url, headers, auth_type, params, http_method):
     """Generates Python code for making API calls using the provided details."""
     prompt = (
-        f"Generate Python code for making an API call.\n"
+        f"Generate Python code for making an API call and handle exceptions as well.\n"
         f"URL: {url}\n"
         f"Headers: {headers}\n"
         f"Auth Type: {auth_type}\n"
@@ -45,7 +46,7 @@ def generate_python_code(url, headers, auth_type, params, http_method):
         f"HTTP Method: {http_method}\n"
     )
     response = openai.chat.completions.create(
-        model="gpt-4",
+        model="gpt-4o",
         messages=[
             {
                 "role": "system",
@@ -79,7 +80,7 @@ def generate_python_code_with_additional_endpoint(url, endpoint1_url, endpoint2_
         f"HTTP Method: {http_method}\n"
     )
     response = openai.chat.completions.create(
-        model="gpt-4",
+        model="gpt-4o",
         messages=[
             {
                 "role": "system",
@@ -124,6 +125,7 @@ def parse_request_config(data):
         params = request_data.get('params', {})
         print(f"params: {params}")
         type=request_data.get('type', None)
+        print(f"type: {type}")
 
         # Handle optional URL and endpoint logic
         # if not base_url:
@@ -148,7 +150,7 @@ def parse_request_config(data):
             type or 'Jinja'
         )
         print(f"auth: {auth}, base_url: {base_url}, params: {params}, http_method: {http_method}")
-        return auth, base_url, params, http_method, endpoint1_url, endpoint2_url, additional_endpoint_value
+        return auth, base_url, params, http_method, endpoint1_url, endpoint2_url, additional_endpoint_value, type
     except Exception as e:
         raise ValueError(f"Error parsing request configuration: {str(e)}")
 
